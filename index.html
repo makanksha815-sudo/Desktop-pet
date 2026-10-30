@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+
+            width: 100vw;
+            height: 100vh;
+
+            background: transparent;
+
+            overflow: hidden;
+
+            font-family: Arial, sans-serif;
+        }
+
+
+        /* --------------------
+           SPEECH BUBBLE
+        -------------------- */
+
+        .message {
+            position: absolute;
+
+            top: 25px;
+            left: 20px;
+
+            background: white;
+
+            padding: 12px 18px;
+
+            border-radius: 18px;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            color: #333;
+
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+            opacity: 0;
+
+            transform: translateY(10px);
+
+            transition:
+                opacity 0.4s ease,
+                transform 0.4s ease;
+
+            white-space: nowrap;
+        }
+
+
+        .message.show {
+            opacity: 1;
+
+            transform: translateY(0);
+        }
+
+
+        /* Little triangle */
+
+        .message::after {
+            content: "";
+
+            position: absolute;
+
+            bottom: -10px;
+            left: 30px;
+
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid white;
+        }
+
+
+        /* --------------------
+           GIRL
+        -------------------- */
+
+        .girl {
+            position: absolute;
+
+            width: 150px;
+
+            height: auto;
+
+            bottom: 0;
+
+            left: 170px;
+
+            user-select: none;
+
+            -webkit-user-drag: none;
+
+            transition: transform 1s ease;
+        }
+
+
+        .girl.move {
+            transform: translateX(-40px);
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="message" id="message">
+        Hiii! 👋🏻
+    </div>
+
+
+    <img
+        src="assets/girl.png"
+        class="girl"
+        id="girl"
+    >
+
+
+    <script>
+
+        const { ipcRenderer } = require("electron");
+
+        const girl = document.getElementById("girl");
+
+        const message = document.getElementById("message");
+
+
+        // --------------------------------
+        // WHEN TIMER TRIGGERS
+        // --------------------------------
+
+        ipcRenderer.on("show-reminder", () => {
+
+            // Start with girl slightly hidden
+            girl.classList.remove("move");
+
+            message.classList.remove("show");
+
+
+            // Girl moves slightly
+
+            setTimeout(() => {
+
+                girl.classList.add("move");
+
+            }, 200);
+
+
+            // Say Hiii
+
+            setTimeout(() => {
+
+                message.innerHTML = "Hiii! 👋🏻";
+
+                message.classList.add("show");
+
+            }, 1000);
+
+
+            // Water reminder
+
+            setTimeout(() => {
+
+                message.classList.remove("show");
+
+
+                setTimeout(() => {
+
+                    message.innerHTML =
+                        "💧 Time to drink some water!";
+
+                    message.classList.add("show");
+
+                }, 400);
+
+
+            }, 3000);
+
+
+            // --------------------------------
+            // DISAPPEAR AFTER 7 SECONDS
+            // --------------------------------
+
+            setTimeout(() => {
+
+                message.classList.remove("show");
+
+                girl.classList.remove("move");
+
+
+                // Tell Electron to hide the window
+
+                setTimeout(() => {
+
+                    ipcRenderer.send("hide-pet");
+
+                }, 500);
+
+            }, 7000);
+
+        });
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "water-girl",
+  "version": "1.0.0",
+  "description": "A cute desktop water reminder pet",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^39.8.10",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.akanksha.watergirl",
+    "productName": "Water Girl",
+    "win": {
+      "target": "nsis"
+    }
+  }
+}
