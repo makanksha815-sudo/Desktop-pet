@@ -52,6 +52,9 @@ A cute desktop water reminder pet built using Electron and Node.js, designed to 
    ```
 
 ## 📸 Screenshots
+<img width="226" height="218" alt="Screenshot 2026-10-30 153007" src="https://github.com/user-attachments/assets/3538ff57-0190-467e-b5e8-b1aca3e9e72f" />
+
+<img width="239" height="223" alt="Screenshot 2026-10-30 153017" src="https://github.com/user-attachments/assets/702beacf-c255-4f1d-aebe-35851eb04117" />
 
 
 
